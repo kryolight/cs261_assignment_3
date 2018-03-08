@@ -244,7 +244,7 @@ struct Node *_removeRightMost(struct Node *cur)
 struct Node *_removeNode(struct Node *cur, TYPE val)
 {
     /*FIXME: write this*/
-  struct Node *root = cur;
+  //struct Node *root = cur;
   // while(cur->val != val)
   //  {
   //      if(val < cur->val)
@@ -334,7 +334,7 @@ void printBSTree(struct BSTree *tree) {
  */
 struct BSTreeIterator* BSTIteratorCreate(struct BSTree* tree) {
 /* FIXME: Complete this implementation */
-  assert(tree != NULL)
+  assert(tree != NULL);
   struct BSTreeIterator *iterator = malloc(sizeof(struct BSTreeIterator));
   iterator->current = tree->root;
   iterator->stack = createLinkedList();
@@ -392,7 +392,7 @@ int BSTIteratorNext(struct BSTreeIterator* iter) {
   {
     if(iter->current != NULL)
     {
-      pushLinkedList(iter->stack, iter->current)
+      pushLinkedList(iter->stack, iter->current);
       iter->current = iter->current->left;
     } else {
       if(!isEmptyLinkedList(iter-stack))
