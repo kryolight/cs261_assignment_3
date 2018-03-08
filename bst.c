@@ -461,9 +461,9 @@ void testRightMost() {
     
     printf("right most of left of root: %d\n", _rightMost(tree->root->left)->val);
     
-    printf("right most of right of left of root: %d", _rightMost(tree->root->left->right)->val);
+    printf("right most of right of left of root: %d\n", _rightMost(tree->root->left->right)->val);
     
-    printf("right most of right of root: %d", _rightMost(tree->root->right)->val);
+    printf("right most of right of root: %d\n", _rightMost(tree->root->right)->val);
 
     printf("Deleting the BSTree...\n");
     deleteBSTree(tree);
