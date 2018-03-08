@@ -260,7 +260,7 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
       free(cur);
       return temp;
     } else {
-      struct Node *precessor = rightMost(cur->left);
+      struct Node *precessor = _rightMost(cur->left);
       cur->val = precessor->val;
       cur->left = _removeRightMost(cur->left);
     }
