@@ -216,6 +216,8 @@ struct Node *_rightMost(struct Node *cur)
 struct Node *_removeRightMost(struct Node *cur)
 {
     /*FIXME: write this*/
+  struct Node *rightMost = _rightMost(cur);
+  _removeRightMost(rightMost);
 }
 
 /*
@@ -234,15 +236,31 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
 {
     /*FIXME: write this*/
   struct Node *root = cur;
-  while(cur->val != val)
-   {
-       if(val < cur->val)
-           cur = cur->left;
-       if (val > cur->val)
-           cur = cur->right;
-   }
-   
+  // while(cur->val != val)
+  //  {
+  //      if(val < cur->val)
+  //          cur = cur->left;
+  //      if (val > cur->val)
+  //          cur = cur->right;
+  //  }
+  if(cur == NULL)
+    return NULL;
+  if (cur->val == val) {
+    if(cur->right == NULL && cur->left == NULL) {
+      free(cur);
+    } else if (cur->right == NULL || cur->left == NULL) {
+
+    } else {
+      _removeRightMost(cur->left);
+    }
+  } else {
+    if(val < cur->val)
+      _removeNode(cur->left, val);
+    if(val > cur->val)
+      _removeNode(cur->right, val);
+  }
    return root;
+  }
 
 /*
   function to remove a value from the binary search tree
@@ -305,6 +323,11 @@ void printBSTree(struct BSTree *tree) {
  */
 struct BSTreeIterator* BSTIteratorCreate(struct BSTree* tree) {
 /* FIXME: Complete this implementation */
+  assert(tree != NULL)
+  struct BSTreeIterator *iterator = malloc(sizeof(struct BSTreeIterator));
+  iterator->current = tree->root;
+  iterator->stack = createLinkedList();
+  return iterator;
 }
 
 /*
@@ -315,6 +338,9 @@ struct BSTreeIterator* BSTIteratorCreate(struct BSTree* tree) {
  */
 void BSTIteratorFree(struct BSTreeIterator* iter) {
 /* FIXME: Complete this implementation */
+  assert(iter != NULL);
+  deleteLinkedList(iter->stack);
+  free(iter);
 }
 
 
@@ -328,6 +354,13 @@ void BSTIteratorFree(struct BSTreeIterator* iter) {
  */
 int BSTIteratorHasNext(struct BSTreeIterator* iter) {
 /* FIXME: Complete this implementation */
+  assert(iter != NULL);
+  if(iter->current == NULL && isEmptyLinkedList(iter->stack))
+  {
+    return 0;
+  } else {
+    return 1;
+  }
 }
 
 
@@ -341,6 +374,27 @@ int BSTIteratorHasNext(struct BSTreeIterator* iter) {
  */
 int BSTIteratorNext(struct BSTreeIterator* iter) {
 /* FIXME: Complete this implementation */
+  assert(iter != NULL || !BSTIteratorHasNext(iter));
+  int singleStep = 0;
+  int nextVal = NULL;
+  while(singleStep == 0) 
+  {
+    if(iter->current != NULL)
+    {
+      pushLinkedList(iter->stack, iter->current)
+      iter->current = iter->current->left;
+    } else {
+      if(!isEmptyLinkedList(iter-stack))
+      {
+        iter->current = topLinkedList(iter->stack);
+        popLinkedList(iter->stack);
+        nextVal = iter->current->val;
+        iter->current = iter->current->right;
+        singleStep = 1;
+      }
+    }
+  }
+  return nextVal;
 }
 
 
