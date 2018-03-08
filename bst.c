@@ -222,9 +222,9 @@ struct Node *_removeRightMost(struct Node *cur)
     free(cur);
     return temp;
   } else {
-    struct Node *rightMost = _rightMost(cur);
-    cur->val = rightMost->val;
-    
+    struct Node *nodeToRemove = _rightMost(cur);
+    nodeToRemove->val = _rightMost(nodeToRemove->left)->val; //replace val at node with precessor val
+    nodeToRemove->left = _removeRightMost(nodeToRemove->left);
     return cur;
   }
 }
@@ -255,20 +255,22 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
   if(cur == NULL)
     return NULL;
   if (cur->val == val) {
-    if(cur->right == NULL && cur->left == NULL) {
+    if(cur->left == NULL) {
+      struct Node *temp = cur->right;
       free(cur);
-    } else if (cur->right == NULL || cur->left == NULL) {
-
+      return temp;
     } else {
-      _removeRightMost(cur->left);
+      struct Node *precessor = rightMost(cur->left);
+      cur->val = precessor->val;
+      cur->left = _removeRightMost(cur->left);
     }
   } else {
     if(val < cur->val)
-      _removeNode(cur->left, val);
+      cur->left = _removeNode(cur->left, val);
     if(val > cur->val)
-      _removeNode(cur->right, val);
+      cur->right = _removeNode(cur->right, val);
   }
-   return root;
+   return cur;
   }
 
 /*
