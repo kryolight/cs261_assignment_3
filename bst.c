@@ -216,8 +216,17 @@ struct Node *_rightMost(struct Node *cur)
 struct Node *_removeRightMost(struct Node *cur)
 {
     /*FIXME: write this*/
-  struct Node *rightMost = _rightMost(cur);
-  _removeRightMost(rightMost);
+  if(cur->right == NULL)
+  {
+    struct Node *temp = cur->left;
+    free(cur);
+    return temp;
+  } else {
+    struct Node *rightMost = _rightMost(cur);
+    cur->val = rightMost->val;
+    
+    return cur;
+  }
 }
 
 /*
