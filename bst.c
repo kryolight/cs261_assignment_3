@@ -221,6 +221,10 @@ struct Node *_removeRightMost(struct Node *cur)
     struct Node *temp = cur->left;
     free(cur);
     return temp;
+  } else if(cur->left == NULL) {
+    struct Node *temp = cur->right;
+    free(cur);
+    return temp;
   } else {
     struct Node *nodeToRemove = _rightMost(cur);
     nodeToRemove->val = _rightMost(nodeToRemove->left)->val; //replace val at node with precessor val
@@ -257,6 +261,10 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
   if (cur->val == val) {
     if(cur->left == NULL) {
       struct Node *temp = cur->right;
+      free(cur);
+      return temp;
+    } else if(cur->right == NULL) {
+      struct Node *temp = cur->left;
       free(cur);
       return temp;
     } else {
@@ -336,6 +344,7 @@ struct BSTreeIterator* BSTIteratorCreate(struct BSTree* tree) {
 /* FIXME: Complete this implementation */
   assert(tree != NULL);
   struct BSTreeIterator *iterator = malloc(sizeof(struct BSTreeIterator));
+  assert(iterator);
   iterator->current = tree->root;
   iterator->stack = createLinkedList();
   return iterator;
