@@ -232,7 +232,7 @@ struct Node *_removeRightMost(struct Node *cur)
     // } else { //no left child and no right child since rightmost
     //   free(nodeToRemove);
     //   return NULL;
-    }
+    // {
   }
 }
 
