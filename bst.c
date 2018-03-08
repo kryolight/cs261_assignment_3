@@ -395,7 +395,7 @@ int BSTIteratorNext(struct BSTreeIterator* iter) {
       pushLinkedList(iter->stack, iter->current);
       iter->current = iter->current->left;
     } else {
-      if(!isEmptyLinkedList(iter-stack))
+      if(!isEmptyLinkedList(iter->stack))
       {
         iter->current = topLinkedList(iter->stack);
         popLinkedList(iter->stack);
